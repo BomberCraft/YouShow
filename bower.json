@@ -1,0 +1,9 @@
+{
+	"name" : "YouShow",
+    "version" : "0.0.1",
+    "devDependencies" : {
+        "bootstrap" : "*",
+        "angular" : "*",
+        "angular-strap" : "*"
+    }
+}
