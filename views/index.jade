@@ -1,5 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    style(type="text/css").
+        #player {
+            margin: 0 auto;
+        }
+
+    .container(ng-controller="videoLoader")
+      h1= title
+      p Welcome to #{title}
+
+      video.text-center#player(ng-hide="loadedVideo === undefined", src="{{loadedVideo.url}}", controls)
+
+
+      .alert.alert-info(role='alert')
+          button.close(type='button', data-dismiss='alert')
+              span(aria-hidden='true') &times;
+              span(sr-only) Close
+          strong Video!
+          | {{loadedVideo}}
+      ul.list-group
+          li.list-group-item(ng-repeat="video in videos")
+            span.video-name
+                a(title="{{video.name}}", ng-click="load(video.url)") {{video.name}}
