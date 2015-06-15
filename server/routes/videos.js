@@ -6,7 +6,7 @@ var fs = require("fs"),
     path = require("path"),
     walk = require('walk');
 
-
+// http://stackoverflow.com/questions/11181546/how-to-enable-cross-origin-resource-sharing-cors-in-the-express-js-framework-o
 
 // Allow Cross Origing Requests !
 router.all('/', function(req, res, next) {
