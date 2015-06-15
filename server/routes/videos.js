@@ -6,18 +6,27 @@ var fs = require("fs"),
     path = require("path"),
     walk = require('walk');
 
+
+
+// Allow Cross Origing Requests !
+router.all('/', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     var walker  = walk.walk(path.join(__dirname , '..', 'data'), { followLinks: false });
     var datas = [];
-    
+
     walker.on('file', function(root, stat, next) {
         var regex = /.*?data(?:[\\/](.*))?/;
         var subst = '$1';
-        
+
         var url = root.replace(regex, subst) || '';
         var file = { 'url': url, 'name': stat.name, 'size': stat.size };
-        
+
         datas.push(file);
         next();
     });
