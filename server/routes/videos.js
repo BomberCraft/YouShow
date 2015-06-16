@@ -4,7 +4,8 @@ var fs = require("fs"),
     http = require("http"),
     url = require("url"),
     path = require("path"),
-    walk = require('walk');
+    walk = require('walk'),
+    xmlrpc = require("xmlrpc");
 
 // http://stackoverflow.com/questions/11181546/how-to-enable-cross-origin-resource-sharing-cors-in-the-express-js-framework-o
 
@@ -15,7 +16,7 @@ router.all('/', function(req, res, next) {
     next();
 });
 
-/* GET users listing. */
+/* GET videos listing. */
 router.get('/', function(req, res, next) {
     var walker  = walk.walk(path.join(__dirname , '..', 'data'), { followLinks: false });
     var datas = [];
@@ -33,6 +34,31 @@ router.get('/', function(req, res, next) {
 
     walker.on('end', function() {
         res.json(datas);
+    });
+});
+
+/**
+ * https://wiki.archlinux.org/index.php/RTorrent#XMLRPC_interface
+ * https://github.com/rakshasa/rtorrent/wiki/RPC-Setup-XMLRPC
+ * https://github.com/rakshasa/rtorrent/wiki/RPC-Option-Strings
+ *
+ *  > # To list all the xmlrpc methods rtorrent supports.
+ *  > xmlrpc localhost system.listMethods
+ */
+
+/*POST new .torrent URL and use rtorrent XMLRPC API*/
+router.post('/torrents', function(req, res, next) {
+    var clientOptions = {
+        host : 'localhost',
+        post : '5000', // ?
+        path : ''
+    };
+
+    var rpcClient = xmlrpc.createClient(clientOptions);
+
+    client.methodCall('TheMethodNameToAddATorrentURL',
+                      [{parameter1 : 'parameter1 value'}],
+                      function(err, value) {
     });
 });
 

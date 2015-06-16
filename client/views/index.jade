@@ -23,11 +23,13 @@ block content
       pre(ng-hide="loadedVideo === undefined")
         code {{loadedVideo}}
 
-      form.form-inline(action='', method='POST', role='form')
-        .form-group
-          label.sr-only(for='') label
-          input#torrentAddress.form-control(type='text', placeholder='Torrent address')
-        button.btn.btn-primary(type='submit') Valider
+      .for-container
+        .alert(ng-class="{'alert-success' : alert.success, 'alert-warning' : alert.warning}") {{alert.msg}}
+        form.form-inline(action='', method='POST', role='form')
+          .form-group
+            label.sr-only(for='') label
+            input#torrentAddress.form-control(type='url', placeholder='Torrent address', ng-model="torrent")
+          button.btn.btn-primary(type='submit', ng-click="addNewTorrent()") Valider
 
       ul.list-group
           li.list-group-item(ng-repeat="video in videos track by $index")
