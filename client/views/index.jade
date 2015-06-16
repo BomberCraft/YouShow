@@ -1,25 +1,37 @@
 extends layout
-
+// https://github.com/rs459/bootstrap3-jade-sublime-plugin
 block content
     style(type="text/css").
         #player {
             margin: 0 auto;
         }
 
+        .movie {
+          cursor : pointer;
+        }
+
     .container(ng-controller="videoLoader")
       h1= title
       p Welcome to #{title}
 
-      video.text-center#player(ng-hide="loadedVideo === undefined", src="{{loadedVideo.url}}", controls)
 
+      video.text-center#player(ng-hide="loadedVideo === undefined", ng-src="{{loadedVideo.url}}", controls)
 
-      .alert.alert-info(role='alert')
-          button.close(type='button', data-dismiss='alert')
-              span(aria-hidden='true') &times;
-              span(sr-only) Close
-          strong Video!
-          | {{loadedVideo}}
+      pre
+        code {{videos}}
+
+      pre(ng-hide="loadedVideo === undefined")
+        code {{loadedVideo}}
+
+      .for-container
+        .alert(ng-class="{'alert-success' : alert.success, 'alert-warning' : alert.warning}") {{alert.msg}}
+        form.form-inline(action='', method='POST', role='form')
+          .form-group
+            label.sr-only(for='') label
+            input#torrentAddress.form-control(type='url', placeholder='Torrent address', ng-model="torrent")
+          button.btn.btn-primary(type='submit', ng-click="addNewTorrent()") Valider
+
       ul.list-group
-          li.list-group-item(ng-repeat="video in videos")
+          li.list-group-item(ng-repeat="video in videos track by $index")
             span.video-name
-                a(title="{{video.name}}", ng-click="load(video.url)") {{video.name}}
+                a.movie(title="{{video.name}}", ng-click="load(video.url, video.name)") {{video.name}}

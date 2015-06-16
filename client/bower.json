@@ -2,6 +2,7 @@
 	"name" : "YouShow",
     "version" : "0.0.1",
     "devDependencies" : {
+        "jquery" : "*",
         "bootstrap" : "*",
         "angular" : "*",
         "angular-strap" : "*"
